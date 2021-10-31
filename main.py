@@ -30,12 +30,10 @@ def verifyUser():
                 user = "Welcome " + eUser
                 print(user)
                 loginCorrect = 1
-                c.bind('<Left>', moveLeft)
-                c.bind('<Right>', moveRight)
-                c.focus_set()
 
-    if (loginCorrect == 0):
-        print("You have entered incorrect login details")
+    # write another if condition here so that the print line below, only shows if loginCorrect is equal 0.
+    # this will ensure that if you enter the correct login details, you wont see this line.
+    print("You have entered incorrect login details")
 
 lUsername = Label(window, text="Username", bg="orange", fg="white", width=18)
 lUsername.pack()
@@ -60,17 +58,6 @@ catcher = c.create_arc(catcher_start_x, catcher_start_y, catcher_start_x2, catch
     start=200, extent=140, style="arc", outline=catcher_color, width=5)
 
 c.pack()
-
-def moveLeft(event):
-    print("moving catcher left")
-    (x1,y1,x2,y2)=c.coords(catcher)
-    if (x1 > 0):
-        c.move(catcher, -20, 0)
-
-# For Homework, you will need to move the catcher to the right.
-# Ensure when you move right, your catcher does not go over the canvas.
-def moveRight(event):
-    print("moving catcher right")    
 
 window.mainloop()
 
