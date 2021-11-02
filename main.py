@@ -1,4 +1,5 @@
 from tkinter import *
+from itertools import cycle
 
 canvas_width = 800
 canvas_height = 400
@@ -59,6 +60,22 @@ c.create_oval(-80, -80, 120,120, fill="orange", width=0)
 catcher = c.create_arc(catcher_start_x, catcher_start_y, catcher_start_x2, catcher_start_y2, 
     start=200, extent=140, style="arc", outline=catcher_color, width=5)
 
+colour_list = ['light blue', 'blue', 'green', 'light green', 'red', 'orange', 'purple', 'black', 'white']
+colour_cycle = cycle(colour_list)
+
+egg_width = 45
+egg_height = 55
+egg_score = 10
+egg_speed = 500
+egg_interval = 4000
+difficulty_factor = 0.95
+
+# As homework, we need to create a function called create_eggs
+# For the time being, the create_eggs function should be called and should 
+# print a message to say "eggs being created"
+# we should call the function we created after we have logged in successfully
+# Hint: You should call the create_eggs function after the line print(user)
+
 c.pack()
 
 def moveLeft(event):
@@ -67,10 +84,11 @@ def moveLeft(event):
     if (x1 > 0):
         c.move(catcher, -20, 0)
 
-# For Homework, you will need to move the catcher to the right.
-# Ensure when you move right, your catcher does not go over the canvas.
 def moveRight(event):
-    print("moving catcher right")    
+    print("moving catcher right")
+    (x1,y1,x2,y2)=c.coords(catcher)
+    if (x2 < 800):
+        c.move(catcher, +20, 0)
 
 window.mainloop()
 
