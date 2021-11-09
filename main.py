@@ -1,5 +1,6 @@
 from tkinter import *
 from itertools import cycle
+from random import randrange
 
 canvas_width = 800
 canvas_height = 400
@@ -30,6 +31,8 @@ def verifyUser():
             if (eQuizValue == "20"):
                 user = "Welcome " + eUser
                 print(user)
+                create_eggs()
+                move_eggs()
                 loginCorrect = 1
                 c.bind('<Left>', moveLeft)
                 c.bind('<Right>', moveRight)
@@ -70,13 +73,28 @@ egg_speed = 500
 egg_interval = 4000
 difficulty_factor = 0.95
 
-# As homework, we need to create a function called create_eggs
-# For the time being, the create_eggs function should be called and should 
-# print a message to say "eggs being created"
-# we should call the function we created after we have logged in successfully
-# Hint: You should call the create_eggs function after the line print(user)
-
 c.pack()
+
+eggs=[]
+def create_eggs():
+    x = randrange(20, 760)
+    y = 20
+    new_egg = c.create_oval(x,y,x+egg_width,y+egg_height, fill=next(colour_cycle), width=0)
+    eggs.append(new_egg)
+    window.after(egg_interval, create_eggs)
+
+# For Homework - understand the move_eggs function and let me know what it means
+# play around with different values to see what happens to the eggs
+def move_eggs():
+    for egg in eggs:
+        (egg_x1, egg_y1, egg_x2, egg_y2) = c.coords(egg)
+        c.move(egg, 0, 10)
+        if (egg_y2 > canvas_height):
+            egg_dropped(egg)
+    window.after(egg_speed, move_eggs)
+
+def egg_dropped(egg):
+    print("egg was dropped")
 
 def moveLeft(event):
     print("moving catcher left")
