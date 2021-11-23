@@ -69,10 +69,13 @@ colour_cycle = cycle(colour_list)
 egg_width = 45
 egg_height = 55
 egg_score = 10
-egg_speed = 500
+egg_speed = 100
 egg_interval = 4000
 difficulty_factor = 0.95
 
+lives_remaining = 3
+lives_text = c.create_text(100, 10, anchor='ne', font=('Arial', 18, 'bold'), fill='darkblue', 
+text='Lives: ' + str(lives_remaining))
 c.pack()
 
 eggs=[]
@@ -83,18 +86,28 @@ def create_eggs():
     eggs.append(new_egg)
     window.after(egg_interval, create_eggs)
 
-# For Homework - understand the move_eggs function and let me know what it means
-# play around with different values to see what happens to the eggs
 def move_eggs():
     for egg in eggs:
         (egg_x1, egg_y1, egg_x2, egg_y2) = c.coords(egg)
-        c.move(egg, 0, 10)
+        c.move(egg, 0, 5)
         if (egg_y2 > canvas_height):
             egg_dropped(egg)
     window.after(egg_speed, move_eggs)
 
 def egg_dropped(egg):
+    eggs.remove(egg)
+    c.delete(egg)
+    lose_a_life()
     print("egg was dropped")
+
+def lose_a_life():
+    # For homework
+    # Write an if statement where if the lives_remaining == 0, call the function win.destroy()
+    # as extension, read up the messagebox function and display a message box that says game over.
+    # https://docs.python.org/3/library/tkinter.messagebox.html
+    global lives_remaining
+    lives_remaining -= 1    
+    c.itemconfigure(lives_text, text='Lives: ' + str(lives_remaining))
 
 def moveLeft(event):
     print("moving catcher left")
