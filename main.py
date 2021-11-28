@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from itertools import cycle
 from random import randrange
 
@@ -33,6 +34,7 @@ def verifyUser():
                 print(user)
                 create_eggs()
                 move_eggs()
+                catcher_check()
                 loginCorrect = 1
                 c.bind('<Left>', moveLeft)
                 c.bind('<Right>', moveRight)
@@ -72,6 +74,7 @@ egg_score = 10
 egg_speed = 100
 egg_interval = 4000
 difficulty_factor = 0.95
+score = 0
 
 lives_remaining = 3
 lives_text = c.create_text(100, 10, anchor='ne', font=('Arial', 18, 'bold'), fill='darkblue', 
@@ -101,13 +104,13 @@ def egg_dropped(egg):
     print("egg was dropped")
 
 def lose_a_life():
-    # For homework
-    # Write an if statement where if the lives_remaining == 0, call the function win.destroy()
-    # as extension, read up the messagebox function and display a message box that says game over.
-    # https://docs.python.org/3/library/tkinter.messagebox.html
     global lives_remaining
     lives_remaining -= 1    
     c.itemconfigure(lives_text, text='Lives: ' + str(lives_remaining))
+
+    if (lives_remaining == 0):
+        window.destroy()
+        messagebox.showinfo('Score board', "Game over. Your Score: " + str(egg_score))
 
 def moveLeft(event):
     print("moving catcher left")
@@ -120,6 +123,23 @@ def moveRight(event):
     (x1,y1,x2,y2)=c.coords(catcher)
     if (x2 < 800):
         c.move(catcher, +20, 0)
+
+def catcher_check():
+    (cx1,cy1,cx2,cy2) = c.coords(catcher)
+    for egg in eggs:
+        (ex1,ey1,ex2,ey2) = c.coords(egg)
+        if (cx1<ex1 and ex2<cx2 and cy2-ey2 < 40):
+           eggs.remove(egg)
+           c.delete(egg)
+           inc_score(egg_score) 
+
+    window.after(100, catcher_check)
+
+def inc_score(s):
+    print ("increment score. Need to still do work in here")
+    # For homework, increase the variable score by egg_score
+    # draw some diagrams of the catcher in the canvas and an egg near the catcher, and get the x and y coordinates
+    # of the catcher and the egg. Same way we just did
 
 window.mainloop()
 
