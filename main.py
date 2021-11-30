@@ -32,6 +32,7 @@ def verifyUser():
                 user = "Welcome " + eUser
                 print(user)
                 create_eggs()
+                move_eggs()
                 loginCorrect = 1
                 c.bind('<Left>', moveLeft)
                 c.bind('<Right>', moveRight)
@@ -73,7 +74,6 @@ def moveLeft(event):
     if (x1 > 0):
         c.move(catcher, -20, 0)
 
-# Homework is to finish the function moveRight so that your catcher will move right
 def moveRight(event):
     print("moving catcher right")  
     (x1,y1,x2,y2) = c.coords(catcher)
@@ -83,6 +83,7 @@ def moveRight(event):
 egg_width = 45
 egg_height = 55
 egg_interval = 4000
+egg_speed = 100
 
 #for homework, understand what we just wrote and play around
 #with the width, height and interval to see what it does to the eggs
@@ -96,6 +97,14 @@ def create_eggs():
     new_egg = c.create_oval(x,y,x+egg_width, y+egg_height,fill=next(colour_cycle),width=0)
     eggs.append(new_egg)
     window.after(egg_interval, create_eggs)
+
+def move_eggs():
+    for egg in eggs:
+        (egg_x1, egg_y1, egg_x2, egg_y2) = c.coords(egg)
+        c.move(egg, 0, 5)
+        if (egg_y2 > canvas_height):
+            egg_dropped(egg)
+    window.after(egg_speed, move_eggs)
 
 window.mainloop()
 
