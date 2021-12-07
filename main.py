@@ -70,7 +70,7 @@ colour_cycle = cycle(colour_list)
 
 egg_width = 45
 egg_height = 55
-egg_score = 10
+egg_score = 15
 egg_speed = 100
 egg_interval = 4000
 difficulty_factor = 0.95
@@ -79,6 +79,10 @@ score = 0
 lives_remaining = 3
 lives_text = c.create_text(100, 10, anchor='ne', font=('Arial', 18, 'bold'), fill='darkblue', 
 text='Lives: ' + str(lives_remaining))
+
+score_text = c.create_text(100, 40, anchor='ne', font=('Arial', 18, 'bold'), fill='darkblue', 
+text='Score: ' + str(score))
+
 c.pack()
 
 eggs=[]
@@ -136,10 +140,9 @@ def catcher_check():
     window.after(100, catcher_check)
 
 def inc_score(s):
-    print ("increment score. Need to still do work in here")
-    # For homework, increase the variable score by egg_score
-    # draw some diagrams of the catcher in the canvas and an egg near the catcher, and get the x and y coordinates
-    # of the catcher and the egg. Same way we just did
+    global score, egg_speed, egg_interval
+    score = score + s # shortform is: score +=s
+    c.itemconfigure(score_text, text='Score: ' + str(score))
 
 window.mainloop()
 
