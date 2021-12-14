@@ -73,7 +73,7 @@ egg_height = 55
 egg_score = 15
 egg_speed = 100
 egg_interval = 4000
-difficulty_factor = 0.95
+difficulty_factor = 0.8
 score = 0
 
 lives_remaining = 3
@@ -114,7 +114,7 @@ def lose_a_life():
 
     if (lives_remaining == 0):
         window.destroy()
-        messagebox.showinfo('Score board', "Game over. Your Score: " + str(egg_score))
+        messagebox.showinfo('Score board', "Game over. Your Score: " + str(score))
 
 def moveLeft(event):
     print("moving catcher left")
@@ -143,6 +143,8 @@ def inc_score(s):
     global score, egg_speed, egg_interval
     score = score + s # shortform is: score +=s
     c.itemconfigure(score_text, text='Score: ' + str(score))
+    egg_speed = int(egg_speed * difficulty_factor)
+    egg_interval = int(egg_interval * difficulty_factor)
 
 window.mainloop()
 
